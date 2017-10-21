@@ -1,3 +1,4 @@
+require_relative "regles.rb"
 require_relative "eleve.rb"
 
 #----Méthodes auxiliaires
@@ -67,6 +68,8 @@ def ecrire_fichier(nom_fichier, eleves)
 end
 
 #-----Programme principal
+Eleve.regles(S1)
+Eleve.ang(Ang1)
 
 max_reg = 31
 max_enr = 35
