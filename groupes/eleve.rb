@@ -46,8 +46,7 @@ class Eleve
 	end
 	
 	def assigner_groupe_au_hasard
-		index = rand(@groupes_permis.size)
-		@groupe = @groupes_permis[index]
+		@groupe = @groupes_permis[rand(@groupes_permis.size)]
 		assigner_ang
 	end
 	
@@ -61,7 +60,7 @@ class Eleve
 	
 private
 	def assigner_ang
-		@cours_ang = @@ang[@groupe+"-"+@anglais]
+		@cours_ang = @@ang["#{@groupe}-#{@anglais}"]
 	end
 end
 

@@ -29,18 +29,18 @@ def afficher(liste)
 	liste.each {|cle, valeur| puts "#{cle}\t#{valeur}"}	if liste.class == Hash
 end
 
-def total_groupe(groupe, eleves)
+def compter_eleves_dans_le_groupe(groupe, eleves)
 	return eleves.find_all{|eleve| eleve.groupe == groupe}.size
 end
 
-def total_cours_ang(cours, eleves)
+def compter_eleves_dans_le_groupe_anglais(cours, eleves)
 	return eleves.find_all{|eleve| eleve.cours_ang == cours}.size
 end
 
-def total_groupes(groupes, eleves)
+def compter_eleves_de_tous_groupes(groupes, eleves)
 	total = Hash.new
 	groupes.each do |groupe| 
-		total[groupe] = total_groupe(groupe, eleves)
+		total[groupe] = compter_eleves_dans_le_groupe(groupe, eleves)
 	end	
 	return total
 end
@@ -48,12 +48,12 @@ end
 def total_ang(cours_ang, eleves)
 	total = Hash.new
 	cours_ang.each do |cours| 
-		total[cours] = total_cours_ang(cours, eleves)
+		total[cours] = compter_eleves_dans_le_groupe_anglais(cours, eleves)
 	end	
 	return total
 end
 
-def valide?(totaux, maximas)
+def valider?(totaux, maximas)
 	return totaux.all?{|groupe, total| total <= maximas[groupe]  }
 end
 
@@ -74,7 +74,7 @@ Eleve.ang(Ang1)
 max_reg = 31
 max_enr = 35
 
-contraintes_groupe = {
+max_eleves_par_groupe = {
 	"101" => max_reg,  
 	"103" => max_reg, 
 	"105" => max_reg, 
@@ -88,9 +88,9 @@ contraintes_groupe = {
 	"108" => max_enr 
 }
 
-groupes = contraintes_groupe.keys
+groupes = max_eleves_par_groupe.keys
 
-contraintes_ang = {
+max_eleves_par_groupe_ang = {
 	"ELA104-00001" => 34, 
 	"ELA104-00007" => 34, 
 			
@@ -106,52 +106,49 @@ contraintes_ang = {
 	"ESL104-00111" => 31 
 }
 
-cours_ang = contraintes_ang.keys
+cours_ang = max_eleves_par_groupe_ang.keys
 
 eleves = lire_fichier("s1.csv")
 
 puts "Répartition initiale"
 eleves.each {|eleve| eleve.assigner_groupe_au_hasard }
 
-puts "GROUPES"
-totaux_gr = total_groupes(groupes, eleves)
-afficher(totaux_gr)
-puts "ANGLAIS"
-totaux_ang = total_ang(cours_ang, eleves)
-afficher(totaux_ang)
+totaux_des_groupes = compter_eleves_de_tous_groupes(groupes, eleves)
+totaux_des_groupes_ang = total_ang(cours_ang, eleves)
+
+puts "GROUPES"; afficher(totaux_des_groupes)
+puts "ANGLAIS"; afficher(totaux_des_groupes_ang)
 
 fini = false
-cnt = 0
-while !fini
-	cnt = cnt + 1
-	#~ puts cnt
+compteur = 0; max_compteur = 100000
+
+while !fini and compteur < max_compteur
+	compteur = compteur + 1
+	
 	eleve = choisir_eleve_au_hasard(eleves)
 	groupe = eleve.groupe
-	ang = eleve.cours_ang
-	nombre_eleves = total_groupe(groupe, eleves)
-	nombre_eleves_ang = total_cours_ang(ang, eleves)
+	groupe_anglais = eleve.cours_ang
 	
-	if nombre_eleves > contraintes_groupe[groupe] or nombre_eleves_ang > contraintes_ang[ang]
+	nombre_eleves = compter_eleves_dans_le_groupe(groupe, eleves)
+	nombre_eleves_ang = compter_eleves_dans_le_groupe_anglais(groupe_anglais, eleves)
+	
+	if 	nombre_eleves > max_eleves_par_groupe[groupe] or 
+		nombre_eleves_ang > max_eleves_par_groupe_ang[groupe_anglais]
 	then 
 		eleve.assigner_groupe_au_hasard
-		totaux_gr = total_groupes(groupes, eleves)
-		totaux_ang = total_ang(cours_ang, eleves)
-		v1 = valide?(totaux_gr, contraintes_groupe)
-		v2 = valide?(totaux_ang, contraintes_ang)
-		fini =  (v1 and v2)
+		
+		totaux_des_groupes = compter_eleves_de_tous_groupes(groupes, eleves)
+		totaux_des_groupes_ang = total_ang(cours_ang, eleves)
+		
+		fini = 	valider?(totaux_des_groupes, max_eleves_par_groupe) and
+				valider?(totaux_des_groupes_ang, max_eleves_par_groupe_ang)
 	end
 	
 end
 
-puts
-puts "Répartition finale"
-puts "itérations : #{cnt}"
+puts "\nRépartition finale après #{compteur} itérations"
 
-puts "GROUPES"
-afficher(totaux_gr)
-puts "ANGLAIS"
-afficher(totaux_ang)
+puts "GROUPES"; afficher(totaux_des_groupes)
+puts "ANGLAIS"; afficher(totaux_des_groupes_ang)
 
 ecrire_fichier("groupes_s1.txt", eleves)
-
-#~ afficher eleves
