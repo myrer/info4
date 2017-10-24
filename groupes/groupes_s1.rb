@@ -30,11 +30,11 @@ def afficher(liste)
 end
 
 def compter_eleves_dans_le_groupe(groupe, eleves)
-	return eleves.find_all{|eleve| eleve.groupe == groupe}.size
+	return eleves.select{|eleve| eleve.groupe == groupe}.size
 end
 
 def compter_eleves_dans_le_groupe_anglais(cours, eleves)
-	return eleves.find_all{|eleve| eleve.cours_ang == cours}.size
+	return eleves.select{|eleve| eleve.cours_ang == cours}.size
 end
 
 def compter_eleves_de_tous_groupes(groupes, eleves)
