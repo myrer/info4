@@ -57,10 +57,6 @@ def valider?(totaux, maximas)
 	return totaux.all?{|groupe, total| total <= maximas[groupe]  }
 end
 
-def choisir_eleve_au_hasard(eleves)
-	return eleves[rand(eleves.size)]
-end
-
 def ecrire_fichier(nom_fichier, eleves)
 	f = File.open(nom_fichier, "w")
 	eleves.sort{|a,b| a.groupe <=> b.groupe}.each{|eleve| f.write(eleve.to_s + "\n")}
@@ -125,7 +121,7 @@ compteur = 0; max_compteur = 100000
 while !fini and compteur < max_compteur
 	compteur = compteur + 1
 	
-	eleve = choisir_eleve_au_hasard(eleves)
+	eleve = eleves.sample #Choisir un élève au hasard
 	groupe = eleve.groupe
 	groupe_anglais = eleve.cours_ang
 	
