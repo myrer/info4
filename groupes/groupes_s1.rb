@@ -45,7 +45,7 @@ def compter_eleves_de_tous_groupes(groupes, eleves)
 	return total
 end
 
-def total_ang(cours_ang, eleves)
+def compter_eleves_de_tous_groupes_anglais(cours_ang, eleves)
 	total = Hash.new
 	cours_ang.each do |cours| 
 		total[cours] = compter_eleves_dans_le_groupe_anglais(cours, eleves)
@@ -110,7 +110,7 @@ puts "RÃ©partition initiale"
 eleves.each {|eleve| eleve.assigner_groupe_au_hasard }
 
 totaux_des_groupes = compter_eleves_de_tous_groupes(groupes, eleves)
-totaux_des_groupes_ang = total_ang(cours_ang, eleves)
+totaux_des_groupes_ang = compter_eleves_de_tous_groupes_anglais(cours_ang, eleves)
 
 puts "GROUPES"; afficher(totaux_des_groupes)
 puts "ANGLAIS"; afficher(totaux_des_groupes_ang)
@@ -121,7 +121,7 @@ compteur = 0; max_compteur = 100000
 while !fini and compteur < max_compteur
 	compteur = compteur + 1
 	
-	eleve = eleves.sample #Choisir un élève au hasard
+	eleve = eleves.sample #Choisir un Ã©lÃ¨ve au hasard
 	groupe = eleve.groupe
 	groupe_anglais = eleve.cours_ang
 	
@@ -134,7 +134,7 @@ while !fini and compteur < max_compteur
 		eleve.assigner_groupe_au_hasard
 		
 		totaux_des_groupes = compter_eleves_de_tous_groupes(groupes, eleves)
-		totaux_des_groupes_ang = total_ang(cours_ang, eleves)
+		totaux_des_groupes_ang = compter_eleves_de_tous_groupes_anglais(cours_ang, eleves)
 		
 		fini = 	valider?(totaux_des_groupes, max_eleves_par_groupe) and
 				valider?(totaux_des_groupes_ang, max_eleves_par_groupe_ang)
