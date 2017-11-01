@@ -1,6 +1,6 @@
 # eleve.rb : Eleve est une représentation d'un élève de S1 à JDLM
 class Eleve
-		
+	
 	attr_reader :numero, :nom, :prenom, :sexe, :programme, :natation, :anglais, :groupe, :cours_ang
 	attr_reader :musique, :cours_musique
 	
@@ -13,13 +13,22 @@ class Eleve
 		@programme = params[:programme]
 		@natation = params[:natation]
 		@anglais = params[:anglais]
-		@musique = params[:musique]
+		
+		case @@regles
+		when S1
+			@musique = ""
+		when S2 
+			@musique = params[:musique] 
+		end
 		
 		#configurer groupes_permis
 		@groupes_permis = 	@@regles[@programme]
 		@groupes_permis = @groupes_permis & @@regles[@anglais] 
-		@groupes_permis = @groupes_permis & @@regles[@musique] 
 		
+		case @@regles
+		when S2	
+			@groupes_permis = @groupes_permis & @@regles[@musique]
+		end
 	end
 	
 	def to_s
@@ -32,11 +41,11 @@ class Eleve
 		then 
 			groupe = ""
 			cours_ang = ""
-			cours_musique = ""
+			cours_musique = "" 
 		else
 			groupe = @groupe
 			cours_ang = @cours_ang	
-			cours_musique = @cours_musique
+			cours_musique = @cours_musique 
 		end	
 		
 		"#{@numero}\t#{@nom.ljust(20, " ")}#{@prenom.ljust(20, " ")}" + 
@@ -48,14 +57,14 @@ class Eleve
 		then 
 			@groupe = groupe
 			assigner_ang
-			assigner_musique
+			assigner_musique 
 		end
 	end
 	
 	def assigner_groupe_au_hasard
-		@groupe = @groupes_permis.sample #Choisir un groupe au hasard
+		@groupe = @groupes_permis[rand(@groupes_permis.size)]
 		assigner_ang
-		assigner_musique
+		assigner_musique 
 	end
 	
 	def self.regles(niveau)
@@ -76,7 +85,10 @@ private
 	end
 	
 	def assigner_musique
-		@cours_musique = @@mus["#{@groupe}-#{@musique}"]
+		case @@regles
+		when S2 
+			@cours_musique = @@mus["#{@groupe}-#{@musique}"]
+		end	
 	end
 end
 
