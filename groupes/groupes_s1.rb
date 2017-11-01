@@ -30,11 +30,11 @@ def afficher(liste)
 end
 
 def compter_eleves_dans_le_groupe(groupe, eleves)
-	return eleves.find_all{|eleve| eleve.groupe == groupe}.size
+	return eleves.select{|eleve| eleve.groupe == groupe}.size
 end
 
 def compter_eleves_dans_le_groupe_anglais(cours, eleves)
-	return eleves.find_all{|eleve| eleve.cours_ang == cours}.size
+	return eleves.select{|eleve| eleve.cours_ang == cours}.size
 end
 
 def compter_eleves_de_tous_groupes(groupes, eleves)
@@ -45,7 +45,7 @@ def compter_eleves_de_tous_groupes(groupes, eleves)
 	return total
 end
 
-def total_ang(cours_ang, eleves)
+def compter_eleves_de_tous_groupes_anglais(cours_ang, eleves)
 	total = Hash.new
 	cours_ang.each do |cours| 
 		total[cours] = compter_eleves_dans_le_groupe_anglais(cours, eleves)
@@ -55,10 +55,6 @@ end
 
 def valider?(totaux, maximas)
 	return totaux.all?{|groupe, total| total <= maximas[groupe]  }
-end
-
-def choisir_eleve_au_hasard(eleves)
-	return eleves[rand(eleves.size)]
 end
 
 def ecrire_fichier(nom_fichier, eleves)
@@ -114,7 +110,7 @@ puts "Répartition initiale"
 eleves.each {|eleve| eleve.assigner_groupe_au_hasard }
 
 totaux_des_groupes = compter_eleves_de_tous_groupes(groupes, eleves)
-totaux_des_groupes_ang = total_ang(cours_ang, eleves)
+totaux_des_groupes_ang = compter_eleves_de_tous_groupes_anglais(cours_ang, eleves)
 
 puts "GROUPES"; afficher(totaux_des_groupes)
 puts "ANGLAIS"; afficher(totaux_des_groupes_ang)
@@ -125,7 +121,7 @@ compteur = 0; max_compteur = 100000
 while !fini and compteur < max_compteur
 	compteur = compteur + 1
 	
-	eleve = choisir_eleve_au_hasard(eleves)
+	eleve = eleves.sample #Choisir un élève au hasard
 	groupe = eleve.groupe
 	groupe_anglais = eleve.cours_ang
 	
@@ -138,7 +134,7 @@ while !fini and compteur < max_compteur
 		eleve.assigner_groupe_au_hasard
 		
 		totaux_des_groupes = compter_eleves_de_tous_groupes(groupes, eleves)
-		totaux_des_groupes_ang = total_ang(cours_ang, eleves)
+		totaux_des_groupes_ang = compter_eleves_de_tous_groupes_anglais(cours_ang, eleves)
 		
 		fini = 	valider?(totaux_des_groupes, max_eleves_par_groupe) and
 				valider?(totaux_des_groupes_ang, max_eleves_par_groupe_ang)

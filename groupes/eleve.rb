@@ -53,7 +53,7 @@ class Eleve
 	end
 	
 	def assigner_groupe_au_hasard
-		@groupe = @groupes_permis[rand(@groupes_permis.size)]
+		@groupe = @groupes_permis.sample #Choisir un groupe au hasard
 		assigner_ang
 		assigner_musique
 	end
