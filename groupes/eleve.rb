@@ -22,8 +22,7 @@ class Eleve
 		end
 		
 		#configurer groupes_permis
-		@groupes_permis = 	@@regles[@programme]
-		@groupes_permis = @groupes_permis & @@regles[@anglais] 
+		@groupes_permis = 	@@regles[@programme] & @@regles[@anglais] 
 		
 		case @@regles
 		when S2	
@@ -49,7 +48,9 @@ class Eleve
 		end	
 		
 		"#{@numero}\t#{@nom.ljust(20, " ")}#{@prenom.ljust(20, " ")}" + 
-		"#{@sexe}\t#{@programme}\t#{@natation}\t#{@anglais.ljust(4, " ")}\t#{@musique.ljust(4, " ")}\t<#{groupe}> <#{cours_ang}>\t <#{cours_musique}>\t [#{groupes}]"
+		"#{@sexe}\t#{@programme}\t#{@natation}\t#{@anglais.ljust(4, " ")}\t" + 
+		"#{@musique.ljust(4, " ")}\t<#{groupe}> <#{cours_ang}>\t <#{cours_musique}>\t" + 
+		"[#{groupes}]"
 	end
 	
 	def assigner_groupe(groupe)
