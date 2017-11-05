@@ -1,6 +1,7 @@
 require 'erb'
 require 'webrick'
 
+require_relative "models/regle.rb"
 require_relative "models/eleve.rb"
 require_relative "models/groupe.rb"
 require_relative "models/classe.rb"
@@ -11,6 +12,7 @@ require_relative "controllers/eleve.rb"
 Eleve.regles(S1)
 Eleve.ang(Ang1)
 Eleve.mus(Mus1)
+Regle.lire_fichier("assets/regles.csv")
 Eleve.lire_fichier("assets/s1.csv")
 Groupe.lire_fichier("assets/groupes.csv")
 Classe.lire_fichier("assets/classes.csv")

@@ -1,0 +1,23 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+	</head>
+	
+	<body>
+		<h1> Liste des règles </h1>
+		<table border="1">
+		<tr>
+			<th>Niveau</th>
+			<th>Attribut</th>
+			<th>Groupes</th>
+		</tr>
+		<% Regle.tous.sort{|a,b| a.niveau <=> b.niveau}.each do |regle| %>
+			<tr>
+				<td><%= regle.niveau %></td>
+				<td><%= regle.attribut %></td>
+				<td><%= regle.noms_des_groupes %></td>
+			</tr>	
+		<% end %>	
+		</table>
+	</body>
+</html>
