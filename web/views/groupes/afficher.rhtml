@@ -1,0 +1,22 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+	</head>
+	
+	<body>
+		<% nom = servlet_request.query['nom'] %>
+		<% groupe = Groupe.obtenir(nom) %>
+		<h1> <%= "Liste des élèves du groupe #{groupe.nom} [#{groupe.total}]" %> </h1>
+		<table border="1">
+		<% groupe.eleves.sort{|a,b| a.nom <=> b.nom}.each do |eleve| %>
+			<tr>
+				<td><%= eleve.numero %></td>
+				<td><%= eleve.nom %></td>
+				<td><%= eleve.prenom %></td>
+				<td><%= eleve.sexe%></td>
+				<td><%= eleve.anglais%></td>
+			</tr>	
+		<% end %>	
+		</table>
+	</body>
+</html>

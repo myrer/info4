@@ -4,8 +4,8 @@ class Eleve
 	
 	@@tous = []
 	
-	attr_reader :numero, :nom, :prenom, :sexe, :programme, :natation, :anglais, :groupe, :cours_ang #Tous
-	attr_reader :musique, :cours_musique #S2
+	attr_reader :numero, :nom, :prenom, :sexe, :programme, :natation, :anglais, :groupe, :inscriptions #Tous
+	attr_reader :musique #S2
 	
 	def initialize(params) #params est un Hash qui contiendra les éléments requis pour construire un Eleve
 		
@@ -16,6 +16,7 @@ class Eleve
 		@programme = params[:programme]
 		@natation = params[:natation]
 		@anglais = params[:anglais]
+		@inscriptions = []
 		
 		case @@regles
 		when S1
@@ -44,17 +45,13 @@ class Eleve
 		if @groupe.nil?
 		then 
 			groupe = ""
-			cours_ang = ""
-			cours_musique = "" 
 		else
 			groupe = @groupe
-			cours_ang = @cours_ang	
-			cours_musique = @cours_musique 
 		end	
 		
 		"#{@numero}\t#{@nom.ljust(20, " ")}#{@prenom.ljust(20, " ")}" + 
 		"#{@sexe}\t#{@programme}\t#{@natation}\t#{@anglais.ljust(4, " ")}\t" + 
-		"#{@musique.ljust(4, " ")}\t #{groupe} #{cours_ang}\t #{cours_musique}\t" + 
+		"#{@musique.ljust(4, " ")}\t #{groupe}"  + 
 		"[#{groupes}]"
 	end
 	
@@ -62,15 +59,21 @@ class Eleve
 		if  @groupes_permis.include?(groupe)
 		then 
 			@groupe = groupe
-			assigner_ang
+			supprimer_inscriptions
+			assigner_base
 			assigner_musique 
 		end
 	end
 	
 	def assigner_groupe_au_hasard
 		@groupe = @groupes_permis[rand(@groupes_permis.size)]
-		assigner_ang
+		supprimer_inscriptions
+		assigner_base
 		assigner_musique 
+	end
+
+	def supprimer_inscriptions
+		@inscriptions = []
 	end
 	
 	def self.regles(niveau)
@@ -88,39 +91,40 @@ class Eleve
 	def self.all
 		@@tous
 	end
+
+	def self.tous
+		@@tous
+	end
 	
 	def self.lire_fichier(nom_fichier)
-	# Créer plusieurs objets Eleve lus du fichier s1.csv, 
-	# Mettre en mémoire les objets Eleve dans le Array eleves,
-	eleves = Array.new #Création d'un objet Array vide
-	f = File.open(nom_fichier, "r")
-	while ligne = f.gets
-		ligne = ligne.chomp
-		infos = ligne.split(";")
-		params = { 	:numero => infos[0],
-					:nom => infos[1],
-					:prenom => infos[2],
-					:sexe => infos[3],
-					:programme => infos[4],
-					:natation => infos[5],
-					:anglais => infos[6],
-					:musique => infos[7]
-		}
-		eleves << Eleve.new(params)
+		f = File.open(nom_fichier, "r")
+		while ligne = f.gets
+			ligne = ligne.chomp
+			infos = ligne.split(";")
+			params = { 	:numero => infos[0],
+						:nom => infos[1],
+						:prenom => infos[2],
+						:sexe => infos[3],
+						:programme => infos[4],
+						:natation => infos[5],
+						:anglais => infos[6],
+						:musique => infos[7]
+			}
+			Eleve.new(params)
+		end
+		f.close
 	end
-	f.close
-	return eleves
-end
+
 private
-	def assigner_ang
-		@cours_ang = @@ang["#{@groupe}-#{@anglais}"]
-		puts "#{@cours_ang}\t#{self.to_s}"
+	def assigner_base
+		@inscriptions << "ABS100-#{@groupe.rjust(5, '0')}"
+		@inscriptions << @@ang["#{@groupe}-#{@anglais}"]
 	end
 	
 	def assigner_musique
 		case @@regles
 		when S2 
-			@cours_musique = @@mus["#{@groupe}-#{@musique}"]
+			@inscriptions = @@mus["#{@groupe}-#{@musique}"]
 		end	
 	end
 end
