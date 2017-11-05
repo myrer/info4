@@ -1,15 +1,17 @@
 class Classe
 	@@tous = []
-	attr_reader :nom, :niveau
+	attr_reader :nom, :niveau, :max_eleves
 	
 	def initialize(params)
 		@nom = params[:nom]
 		@niveau = params[:niveau]
+		@max_eleves = params[:max_eleves].to_i
+		
 		@@tous << self	
 	end
 
 	def to_s
-		"#{@nom}\t#{@niveau}"
+		"#{@nom}\t#{@niveau}\t#{max_eleves}"
 	end
 	
 	def total
@@ -22,7 +24,7 @@ class Classe
 	end
 
 	def eleves
-		Eleve.tous.select{|eleve| eleve.inscriptions.include?(@nom)}
+		Eleve.tous.select{|eleve| eleve.classes.find{|x| x.nom == @nom} }
 	end
 	
 	def self.tous
@@ -40,6 +42,7 @@ class Classe
 			infos = ligne.split(";")
 			params = { 	:nom => infos[0],
 						:niveau => infos[1],
+						:max_eleves => infos[2],
 			}
 			Classe.new(params)
 		end

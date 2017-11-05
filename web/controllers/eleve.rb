@@ -1,16 +1,3 @@
-#----Méthodes auxiliaires
-
-def afficher(liste)
-	liste.each {|element| puts element}	if liste.class == Array
-	liste.each {|cle, valeur| puts "#{cle}\t#{valeur}"}	if liste.class == Hash
-end
-
-def ecrire_fichier(nom_fichier, eleves)
-	f = File.open(nom_fichier, "w")
-	eleves.sort{|a,b| a.groupe <=> b.groupe}.each{|eleve| f.write(eleve.to_s + "\n")}
-	f.close
-end
-
 def former_groupes
 	eleves = Eleve.tous
 	eleves.each {|eleve| eleve.assigner_groupe_au_hasard }
@@ -20,15 +7,14 @@ def former_groupes
 
 	while !fini and compteur < max_compteur
 		compteur = compteur + 1
-		
 		eleve = eleves.sample #Choisir un élève au hasard
 		
-		classes = eleve.inscriptions.collect{|x| Classe.obtenir(x)}
+		classes_eleve = eleve.classes
 		
-		if classes.any? {|classe| classe.total > Max_eleves_par_classe[classe.nom] }
+		if classes_eleve.any? {|classe| classe.total > classe.max_eleves }
 		then 
 			eleve.assigner_groupe_au_hasard
-			fini = 	Classe.tous.all? {|classe| classe.total <= Max_eleves_par_classe[classe.nom]}
+			fini = 	Classe.tous.all? {|classe| classe.total <= classe.max_eleves }
 		end
 	end
 end

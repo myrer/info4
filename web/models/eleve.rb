@@ -4,8 +4,8 @@ class Eleve
 	
 	@@tous = []
 	
-	attr_reader :numero, :nom, :prenom, :sexe, :programme, :natation, :anglais, :groupe, :inscriptions #Tous
-	attr_reader :musique #S2
+	attr_reader :numero, :nom, :prenom, :sexe, :groupe, :natation 
+	attr_reader :programme, :anglais, :musique
 	
 	def initialize(params) #params est un Hash qui contiendra les éléments requis pour construire un Eleve
 		
@@ -16,7 +16,7 @@ class Eleve
 		@programme = params[:programme]
 		@natation = params[:natation]
 		@anglais = params[:anglais]
-		@inscriptions = []
+		@noms_des_classes = []
 		
 		case @@regles
 		when S1
@@ -67,13 +67,17 @@ class Eleve
 	
 	def assigner_groupe_au_hasard
 		@groupe = @groupes_permis[rand(@groupes_permis.size)]
-		supprimer_inscriptions
+		supprimer_classes
 		assigner_base
 		assigner_musique 
 	end
-
-	def supprimer_inscriptions
-		@inscriptions = []
+	
+	def classes
+		@noms_des_classes.collect{|nom_de_classe| Classe.obtenir(nom_de_classe) }
+	end
+	
+	def supprimer_classes
+		@noms_des_classes = []
 	end
 	
 	def self.regles(niveau)
@@ -117,14 +121,14 @@ class Eleve
 
 private
 	def assigner_base
-		@inscriptions << "ABS100-#{@groupe.rjust(5, '0')}"
-		@inscriptions << @@ang["#{@groupe}-#{@anglais}"]
+		@noms_des_classes<< "ABS100-#{@groupe.rjust(5, '0')}"
+		@noms_des_classes << @@ang["#{@groupe}-#{@anglais}"]
 	end
 	
 	def assigner_musique
 		case @@regles
 		when S2 
-			@inscriptions = @@mus["#{@groupe}-#{@musique}"]
+			@noms_des_classes = @@mus["#{@groupe}-#{@musique}"]
 		end	
 	end
 end

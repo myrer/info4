@@ -6,7 +6,6 @@ require_relative "models/groupe.rb"
 require_relative "models/classe.rb"
 
 require_relative "controllers/eleve.rb"
-require_relative "servlets/eleve.rb"
 
 #-----
 Eleve.regles(S1)
