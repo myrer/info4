@@ -92,10 +92,6 @@ class Eleve
 		@@mus = musique
 	end	
 	
-	def self.all
-		@@tous
-	end
-
 	def self.tous
 		@@tous
 	end
@@ -121,14 +117,14 @@ class Eleve
 
 private
 	def assigner_base
-		@noms_des_classes<< "ABS100-#{@groupe.rjust(5, '0')}"
+		@noms_des_classes << "ABS100-#{@groupe.rjust(5, '0')}"
 		@noms_des_classes << @@ang["#{@groupe}-#{@anglais}"]
 	end
 	
 	def assigner_musique
 		case @@regles
 		when S2 
-			@noms_des_classes = @@mus["#{@groupe}-#{@musique}"]
+			@noms_des_classes << @@mus["#{@groupe}-#{@musique}"]
 		end	
 	end
 end
