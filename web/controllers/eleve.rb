@@ -5,10 +5,6 @@ def afficher(liste)
 	liste.each {|cle, valeur| puts "#{cle}\t#{valeur}"}	if liste.class == Hash
 end
 
-def valider?(totaux, maximas)
-	return totaux.all?{|groupe, total| total <= maximas[groupe]  }
-end
-
 def ecrire_fichier(nom_fichier, eleves)
 	f = File.open(nom_fichier, "w")
 	eleves.sort{|a,b| a.groupe <=> b.groupe}.each{|eleve| f.write(eleve.to_s + "\n")}
