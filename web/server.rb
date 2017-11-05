@@ -1,24 +1,27 @@
 require 'erb'
 require 'webrick'
 
-servlet_path = "./servlets"
-servlet_names = %w[ Bonjour Hello Simple]
-
-servlet_names.each {|name| require_relative("#{servlet_path}/#{name.downcase}.rb")}
-
-
-defined_servlets = ObjectSpace.each_object.select{|object| servlet_names.include?(object.to_s)}.reject{|x| x.class == String}
+require_relative "models/eleve.rb"
+require_relative "controllers/eleve.rb"
+require_relative "servlets/eleve.rb"
 
 #-----
-server = WEBrick::HTTPServer.new({ :Port => 8000, :DocumentRoot => "./views"})
-# Add a mime type for *.rhtml files
-WEBrick::HTTPUtils::DefaultMimeTypes.store('rhtml', 'text/html')
+Eleve.regles(S1)
+Eleve.ang(Ang1)
+Eleve.mus(Mus1)
+Eleve.lire_fichier("assets/s1.csv")
+
+#-----
+
+
+Local_root = "/home/rick/rbf/info4/web/"
+
+server = WEBrick::HTTPServer.new({ :Port => 8000, :DocumentRoot => Local_root + "views"})
+
+WEBrick::HTTPUtils::DefaultMimeTypes.store('rhtml', 'text/html') # Add a mime type for *.rhtml files
 
 trap 'INT' do server.shutdown end
-#-----
 
-defined_servlets.each {|servlet| server.mount "/#{servlet.to_s.downcase}", servlet }
-
-server.mount("/fs", WEBrick::HTTPServlet::FileHandler, "/home/rick/rbf/info4/web/views")
+server.mount("/", WEBrick::HTTPServlet::FileHandler, Local_root + "views")
 
 server.start

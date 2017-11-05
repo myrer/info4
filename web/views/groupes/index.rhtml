@@ -1,0 +1,14 @@
+<html>
+	<head><meta charset="UTF-8"></head>
+	<body>
+		<h1> Listes des groupes d'élèves - JDLM</h1>
+		<ul>
+			<% 11.times do |i| %>
+				<% groupe = i + 101 %>
+				<li>
+					<a href="groupe.rhtml?gr=<%= groupe %>"> <%= groupe %> </a> 
+				</li>
+			<% end %>	
+		</ul>
+	</body>
+</html>

@@ -1,0 +1,10 @@
+<html>
+	<head><meta charset="UTF-8"></head>
+	
+	<body>
+		<h1> Liste des élèves</h1>
+		<% Eleve.all.each do |eleve|%>
+			<%= eleve.to_s%><br>
+		<% end %>
+	</body>
+</html>

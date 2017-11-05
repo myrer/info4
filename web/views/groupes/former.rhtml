@@ -1,0 +1,44 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+	</head>
+	
+	<body>
+		<% former_groupes %>
+		<% groupes = Max_eleves_par_groupe.keys %>
+		<% cours_ang = Max_eleves_par_groupe_ang.keys %>
+		<% eleves = Eleve.all %>
+		<% totaux_des_groupes = compter_eleves_de_tous_groupes(groupes, eleves) %>
+		<% totaux_des_groupes_ang = compter_eleves_de_tous_groupes_anglais(cours_ang, eleves)%>
+		
+		<h2> <%= "Nombre d'élèves par groupe" %> </h1>
+		<table border="1">
+		<tr>
+			<th>Groupe</th>
+			<th>Total</th>
+		</tr>
+		
+		<% totaux_des_groupes.each do |groupe, total| %>
+			<tr>
+				<td><%= groupe %></td>
+				<td><%= total %></td>
+			</tr>	
+		<% end %>	
+		</table>
+
+		<h2> <%= "Nombre d'élèves par groupe d'anglais" %> </h1>
+		<table border="1">
+		<tr>
+			<th>Groupe anglais</th>
+			<th>Total</th>
+		</tr>
+		
+		<% totaux_des_groupes_ang.each do |groupe, total| %>
+			<tr>
+				<td><%= groupe %></td>
+				<td><%= total %></td>
+			</tr>	
+		<% end %>	
+		</table>
+	</body>
+</html>

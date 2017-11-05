@@ -1,13 +1,14 @@
 <html>
+	<head><meta charset="UTF-8"></head>
+	
 	<body>
-		<h1> Formation des groupes JDLM</h1>
-		<h2>RHTML</h2>
-		<a href="http://localhost:8000/bonjour"> Bonjour! </a><br>
-		<a href="http://localhost:8000/hello"> Hello! </a>
+		<h1> Formation des groupes - JDLM - main</h1>
 		<ul>
-			<% 11.times do |groupe| %>
-				<li> <%= groupe + 101 %> </li>
-			<% end %>	
+			<li> <a href="eleves/liste.rhtml?niveau=s1">Liste S1 </a></li>
+			<li> <a href="groupes/former.rhtml?niveau=s1">Former S1 </a></li>
+			<li> <a href="groupes/index.rhtml">Listes d'élèves de S1 </a></li>
+			<br>
+			<li> <a href="eleves/liste.rhtml?niveau=s2">Liste S2 </a></li>
 		</ul>
 	</body>
 </html>
