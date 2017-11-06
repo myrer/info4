@@ -1,5 +1,3 @@
-require_relative "regles.rb"
-
 class Eleve
 	
 	@@tous = []
