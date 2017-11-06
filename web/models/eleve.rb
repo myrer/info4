@@ -4,34 +4,30 @@ class Eleve
 	
 	@@tous = []
 	
-	attr_reader :numero, :nom, :prenom, :sexe, :groupe, :natation 
-	attr_reader :programme, :anglais, :musique
+	attr_reader :numero, :nom, :prenom, :sexe, :niveau, :groupe, :natation, :attributs
+	attr_reader :classes
 	
 	def initialize(params) #params est un Hash qui contiendra les éléments requis pour construire un Eleve
 		
 		@numero = params[:numero]
+		@niveau = params[:niveau]
 		@nom = params[:nom]
 		@prenom = params[:prenom]
 		@sexe = params[:sexe]
-		@programme = params[:programme]
 		@natation = params[:natation]
-		@anglais = params[:anglais]
-		@noms_des_classes = []
+		@attributs = params[:attributs]
 		
-		case @@regles
-		when S1
-			@musique = ""
-		when S2 
-			@musique = params[:musique] 
-		end
+		@regles = Regle.niveau(@niveau)
+		
+		@classes = []
 		
 		#configurer groupes_permis
-		@groupes_permis = 	@@regles[@programme] & @@regles[@anglais] 
+		@groupes_permis = Groupe.niveau(@niveau)
 		
-		case @@regles
-		when S2	
-			@groupes_permis = @groupes_permis & @@regles[@musique]
-		end
+		@attributs.each do |attribut|
+			regle = @regles.find{|regle| regle.attribut == attribut }
+			@groupes_permis = @groupes_permis & regle.groupes_permis
+		end	
 		
 		@@tous << self
 	end
@@ -39,58 +35,33 @@ class Eleve
 	def to_s
 		if @groupes_permis.empty? == true
 		then groupes = "AUCUN!"
-		else groupes = @groupes_permis.join(", ") 
+		else groupes = @groupes_permis.collect{|x| x.nom}.join(", ") 
 		end
 		
 		if @groupe.nil?
 		then 
 			groupe = ""
 		else
-			groupe = @groupe
+			groupe = @groupe.nom
 		end	
 		
-		"#{@numero}\t#{@nom.ljust(20, " ")}#{@prenom.ljust(20, " ")}" + 
-		"#{@sexe}\t#{@programme}\t#{@natation}\t#{@anglais.ljust(4, " ")}\t" + 
-		"#{@musique.ljust(4, " ")}\t #{groupe}"  + 
-		"[#{groupes}]"
+		"#{@numero};#{@niveau};#{groupe};#{@nom};#{@prenom};#{@sexe};#{@natation};" + 
+		"#{@attributs.join(";")};"  + 
+		"[#{groupes}];"
 	end
 	
 	def assigner_groupe(groupe)
 		if  @groupes_permis.include?(groupe)
 		then 
 			@groupe = groupe
-			supprimer_inscriptions
-			assigner_base
-			assigner_musique 
+			assigner_classes
 		end
 	end
 	
 	def assigner_groupe_au_hasard
 		@groupe = @groupes_permis[rand(@groupes_permis.size)]
-		supprimer_classes
-		assigner_base
-		assigner_musique 
+		assigner_classes
 	end
-	
-	def classes
-		@noms_des_classes.collect{|nom_de_classe| Classe.obtenir(nom_de_classe) }
-	end
-	
-	def supprimer_classes
-		@noms_des_classes = []
-	end
-	
-	def self.regles(niveau)
-		@@regles = niveau
-	end
-	
-	def self.ang(ang)
-		@@ang = ang
-	end
-
-	def self.mus(musique)
-		@@mus = musique
-	end	
 	
 	def self.tous
 		@@tous
@@ -102,13 +73,12 @@ class Eleve
 			ligne = ligne.chomp
 			infos = ligne.split(";")
 			params = { 	:numero => infos[0],
-						:nom => infos[1],
-						:prenom => infos[2],
-						:sexe => infos[3],
-						:programme => infos[4],
+						:niveau => infos[1],
+						:nom => infos[2],
+						:prenom => infos[3],
+						:sexe => infos[4],
 						:natation => infos[5],
-						:anglais => infos[6],
-						:musique => infos[7]
+						:attributs => infos[6..-1]
 			}
 			Eleve.new(params)
 		end
@@ -116,15 +86,10 @@ class Eleve
 	end
 
 private
-	def assigner_base
-		@noms_des_classes << "ABS100-#{@groupe.rjust(5, '0')}"
-		@noms_des_classes << @@ang["#{@groupe}-#{@anglais}"]
-	end
-	
-	def assigner_musique
-		case @@regles
-		when S2 
-			@noms_des_classes << @@mus["#{@groupe}-#{@musique}"]
+	def assigner_classes
+		@classes = []
+		@attributs.each do |attribut|
+			@classes << Classe.assigner(@groupe, attribut)
 		end	
 	end
 end

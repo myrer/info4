@@ -5,11 +5,12 @@ class Groupe
 	def initialize(params)
 		@nom = params[:nom]
 		@niveau = params[:niveau]
+		
 		@@tous << self	
 	end
 
 	def to_s
-		"#{@nom}\t#{@niveau}"
+		"#{@nom};#{@niveau};"
 	end
 	
 	def total
@@ -22,7 +23,7 @@ class Groupe
 	end
 
 	def eleves
-		Eleve.tous.select{|eleve| eleve.groupe == @nom}
+		Eleve.tous.select{|eleve| eleve.groupe == self }
 	end
 	
 	def self.tous
@@ -30,7 +31,11 @@ class Groupe
 	end
 	
 	def self.obtenir(nom)
-		@@tous.find{|x| x.nom == nom}
+		rv = @@tous.find{|x| x.nom == nom}
+	end
+	
+	def Groupe.niveau(niveau)
+		@@tous.select{|groupe| groupe.niveau == niveau}
 	end
 	
 	def self.lire_fichier(nom_fichier)
@@ -38,8 +43,8 @@ class Groupe
 		while ligne = f.gets
 			ligne = ligne.chomp
 			infos = ligne.split(";")
-			params = { 	:nom => infos[0],
-						:niveau => infos[1],
+			params = { 	:nom => infos[0].strip,
+						:niveau => infos[1].strip,
 			}
 			Groupe.new(params)
 		end

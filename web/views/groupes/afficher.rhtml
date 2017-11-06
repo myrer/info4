@@ -11,10 +11,11 @@
 		<% groupe.eleves.sort{|a,b| a.nom <=> b.nom}.each do |eleve| %>
 			<tr>
 				<td><%= eleve.numero %></td>
+				<td><%= eleve.niveau %></td>
 				<td><%= eleve.nom %></td>
 				<td><%= eleve.prenom %></td>
 				<td><%= eleve.sexe%></td>
-				<td><%= eleve.anglais%></td>
+				<td><%= eleve.attributs.join(", ")%></td>
 			</tr>	
 		<% end %>	
 		</table>

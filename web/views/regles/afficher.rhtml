@@ -9,13 +9,13 @@
 		<tr>
 			<th>Niveau</th>
 			<th>Attribut</th>
-			<th>Groupes</th>
+			<th>Groupes permis</th>
 		</tr>
 		<% Regle.tous.sort{|a,b| a.niveau <=> b.niveau}.each do |regle| %>
 			<tr>
 				<td><%= regle.niveau %></td>
 				<td><%= regle.attribut %></td>
-				<td><%= regle.noms_des_groupes %></td>
+				<td><%= regle.groupes_permis.collect{|x| x.nom}.join(", ") %></td>
 			</tr>	
 		<% end %>	
 		</table>

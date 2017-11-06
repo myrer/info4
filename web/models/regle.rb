@@ -1,17 +1,19 @@
 class Regle
 	@@tous = []
-	attr_reader :niveau, :attribut, :noms_des_groupes
+	attr_reader :niveau, :attribut, :groupes_permis
 	
 	def initialize(params)
 		@niveau = params[:niveau]
 		@attribut = params[:attribut]
-		@noms_des_groupes = params[:noms_des_groupes]
-		puts self
+		@groupes_permis = params[:groupes_permis].split(",").collect {|nom_du_groupe| 
+			Groupe.obtenir(nom_du_groupe)
+		}
+		
 		@@tous << self	
 	end
-
+	
 	def to_s
-		"#{@niveau}\t#{@attribut}\t#{@noms_des_groupes}"
+		"#{@niveau}\t#{@attribut}\t#{@groupes_permis.collect{|x| x.nom}.join(",")}"
 	end
 	
 	def eleves
@@ -22,8 +24,8 @@ class Regle
 		@@tous
 	end
 	
-	def self.obtenir(niveau, attribut)
-		@@tous.find{|x| x.niveau == nivau && x.attribut == attribut }
+	def self.niveau(niveau)
+		@@tous.select{|x| x.niveau == niveau }
 	end
 	
 	def self.lire_fichier(nom_fichier)
@@ -33,7 +35,7 @@ class Regle
 			infos = ligne.split(";")
 			params = { 	:niveau => infos[0],
 						:attribut => infos[1],
-						:noms_des_groupes => infos[2],
+						:groupes_permis => infos[2],
 			}
 			Regle.new(params)
 		end

@@ -6,6 +6,8 @@
 			<tr>
 				<th> Nom</th>
 				<th> Niveau</th>
+				<th> Attribut</th>
+				<th> Groupes permis</th>
 				<th> Maximun d'élèves</th>
 				<th> Nombre d'élèves</th>
 			</tr>
@@ -13,6 +15,8 @@
 				<tr>
 					<td><a href="afficher.rhtml?nom=<%= classe.nom %>"> <%= classe.nom %>  </a></td> 
 					<td> <%= classe.niveau %> </td> 
+					<td> <%= classe.attribut %> </td> 
+					<td> <%= classe.groupes_permis_str %> </td> 
 					<td> <%= classe.max_eleves %> </td> 
 					<td> <%= classe.total %> </td> 
 				</tr>
