@@ -39,30 +39,18 @@ class Eleve
 		end	
 	end
 	
-	def to_s
-		if @groupes_permis.empty? 
-		then groupes = "AUCUN!"
-		else groupes = @groupes_permis.collect{|x| x.nom}.join(", ") 
-		end
-		
-		if @groupe.nil?
-		then 
-			groupe = ""
-		else
-			groupe = @groupe.nom
-		end	
-		
-		"#{@numero};#{@niveau};#{groupe};#{@nom};#{@prenom};#{@sexe};#{@natation};" + 
-		"#{@attributs.join(";")};"  + 
-		"[#{groupes}];"
-	end
-	
 	def groupe_nom
 		if @groupe.nil?
 			return  "?"
 		else
 			return @groupe.nom
 		end	
+	end
+	
+	def to_s
+		"#{@numero};#{@niveau};#{groupe_nom};#{@nom};#{@prenom};#{@sexe};#{@natation};" + 
+		"#{@attributs.join(";")};"  + 
+		"[#{groupes_permis_str}];"
 	end
 	
 	def assigner_groupe(groupe)
@@ -74,7 +62,7 @@ class Eleve
 	end
 	
 	def assigner_groupe_au_hasard
-		@groupe = @groupes_permis[rand(@groupes_permis.size)]
+		@groupe = @groupes_permis.sample
 		assigner_classes
 	end
 	
@@ -96,7 +84,7 @@ class Eleve
 						:natation => infos[5],
 						:attributs => infos[6..-1]
 			}
-			if eleve = Eleve.tous.find{|x| x.numero == params[:numero]}
+			if eleve = @@tous.find{|x| x.numero == params[:numero]}
 				rapport << "Existe déjà : #{eleve}"
 			else
 				eleve = Eleve.new(params)

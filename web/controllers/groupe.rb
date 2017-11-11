@@ -10,14 +10,22 @@ def configurer_groupe_afficher(servlet_request)
 end
 
 def configurer_groupe_former(servlet_request)
-	niveau = servlet_request.query['niveau']
-	former_groupes(niveau)
-	@groupes = Groupe.tous.select{|groupe| groupe.niveau == niveau}
-	@classes = Classe.tous.select{|classe| classe.niveau == niveau}
+	@niveau = servlet_request.query['niveau']
+	eleves = Eleve.tous.select{|eleve| eleve.niveau == @niveau}
+	if eleves.empty?
+		@message = "Aucun élève dans le niveau #{@niveau}."
+		@compteur = 0
+		@groupes = []
+		@classes = []
+	else	
+		former_groupes(eleves)
+		@groupes = Groupe.tous.select{|groupe| groupe.niveau == @niveau}
+		@classes = Classe.tous.select{|classe| classe.niveau == @niveau}
+	end	
 end
+	
 
-def former_groupes(niveau)
-	eleves = Eleve.tous.select{|eleve| eleve.niveau == niveau}
+def former_groupes(eleves)
 	eleves.each {|eleve| eleve.assigner_groupe_au_hasard }
 	fini = false
 	compteur = 0; max_compteur = 10000
