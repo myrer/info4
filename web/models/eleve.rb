@@ -73,7 +73,8 @@ class Eleve
 		@@tous
 	end
 	
-	def self.lire_fichier(nom_fichier)
+	def self.importer(nom_fichier)
+		rapport = []
 		f = File.open(nom_fichier, "r")
 		while ligne = f.gets
 			ligne = ligne.chomp
@@ -86,9 +87,15 @@ class Eleve
 						:natation => infos[5],
 						:attributs => infos[6..-1]
 			}
-			Eleve.new(params)
+			if eleve = Eleve.tous.find{|x| x.numero == params[:numero]}
+				rapport << "Existe déjà : #{eleve}"
+			else
+				eleve = Eleve.new(params)
+				rapport << "Ajout de : #{eleve}"
+			end	
 		end
 		f.close
+		return rapport
 	end
 
 private

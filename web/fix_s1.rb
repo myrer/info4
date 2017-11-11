@@ -1,4 +1,4 @@
-f = File.open("assets/OLD_s1.csv", "r")
+f = File.open("assets/OLD_s2.csv", "r")
 while ligne = f.gets
 	ligne = ligne.chomp
 	infos = ligne.split(";")
@@ -10,7 +10,7 @@ while ligne = f.gets
 	programme = infos[4]
 	natation = infos[5]
 	anglais = infos[6]
-	#~ musique => infos[7]
-	puts "#{numero};S1;#{nom};#{prenom};#{sexe};#{natation};#{programme};#{anglais};"
+	musique = infos[7]
+	puts "#{numero};S1;#{nom};#{prenom};#{sexe};#{natation};#{programme};#{anglais};#{musique}"
 end
 f.close
