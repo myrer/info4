@@ -24,14 +24,23 @@ class Eleve
 		
 		@attributs.each do |attribut|
 			regle = @regles.find{|regle| regle.attribut == attribut }
+			raise "Pas de règle :  #{attribut} #{self}" if regle.nil?
 			@groupes_permis = @groupes_permis & regle.groupes_permis
 		end	
 		
 		@@tous << self
 	end
 	
+	def groupes_permis_str
+		if @groupes_permis.nil?
+			return "Aucun"
+		else
+			return @groupes_permis.collect{|x| x.nom}.join(";") 
+		end	
+	end
+	
 	def to_s
-		if @groupes_permis.empty? == true
+		if @groupes_permis.empty? 
 		then groupes = "AUCUN!"
 		else groupes = @groupes_permis.collect{|x| x.nom}.join(", ") 
 		end

@@ -12,6 +12,7 @@
 			<th>Sexe</th>
 			<th>Natation</th>
 			<th>Attributs</th>
+			<th>Groupes permis</th>
 		</tr>
 		<% @eleves.each do |eleve| %>
 		<tr>
@@ -23,6 +24,7 @@
 			<td><%= eleve.sexe %></td>
 			<td><%= eleve.natation %></td>
 			<td><%= eleve.attributs.join(";")%></td>
+			<td><%= eleve.groupes_permis_str%></td>
 		</tr>	
 		<% end %>	
 			

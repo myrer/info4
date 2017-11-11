@@ -8,7 +8,6 @@ class Classe
 		@attribut = params[:attribut]
 		@max_eleves = params[:max_eleves].to_i
 		@groupes_permis = configurer_groupes_permis(params[:groupes_permis])
-		
 		@@tous << self	
 	end
 	

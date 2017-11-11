@@ -16,8 +16,6 @@ require_relative "controllers/classe.rb"
 Groupe.lire_fichier("assets/groupes.csv")
 Regle.lire_fichier("assets/regles.csv")
 Classe.lire_fichier("assets/classes.csv")
-#~ Eleve.lire_fichier("assets/s1.csv")
-#~ Eleve.lire_fichier("assets/s2.csv")
 #-----
 
 

@@ -5,7 +5,6 @@ class Groupe
 	def initialize(params)
 		@nom = params[:nom]
 		@niveau = params[:niveau]
-		
 		@@tous << self	
 	end
 
