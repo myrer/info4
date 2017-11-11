@@ -1,25 +1,23 @@
 <%= ouverture %>
-		<%= entete%>
-		
-		<h2> Listes des classes </h2>
-		<table border="1">
+	<h2> Listes des classes </h2>
+	<table border="1">
+		<tr>
+			<th> Nom</th>
+			<th> Niveau</th>
+			<th> Attribut</th>
+			<th> Groupes permis</th>
+			<th> Maximun d'élèves</th>
+			<th> Nombre d'élèves</th>
+		</tr>
+		<% Classe.tous.each do |classe| %>
 			<tr>
-				<th> Nom</th>
-				<th> Niveau</th>
-				<th> Attribut</th>
-				<th> Groupes permis</th>
-				<th> Maximun d'élèves</th>
-				<th> Nombre d'élèves</th>
+				<td><a href="afficher.rhtml?nom=<%= classe.nom %>"> <%= classe.nom %>  </a></td> 
+				<td> <%= classe.niveau %> </td> 
+				<td> <%= classe.attribut %> </td> 
+				<td> <%= classe.groupes_permis_str %> </td> 
+				<td> <%= classe.max_eleves %> </td> 
+				<td> <%= classe.total %> </td> 
 			</tr>
-			<% Classe.tous.each do |classe| %>
-				<tr>
-					<td><a href="afficher.rhtml?nom=<%= classe.nom %>"> <%= classe.nom %>  </a></td> 
-					<td> <%= classe.niveau %> </td> 
-					<td> <%= classe.attribut %> </td> 
-					<td> <%= classe.groupes_permis_str %> </td> 
-					<td> <%= classe.max_eleves %> </td> 
-					<td> <%= classe.total %> </td> 
-				</tr>
-			<% end %>	
-		</table>
+		<% end %>	
+	</table>
 <%= fermeture %>

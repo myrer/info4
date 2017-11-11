@@ -1,18 +1,18 @@
 <%= ouverture %>
-		<%= entete %>
-		<h2> Listes des groupes d'élèves</h2>
-		<table border="1">
+<% configurer_groupe_index %>
+	<h2> Listes des groupes d'élèves</h2>
+	<table border="1">
+		<tr>
+			<th>Nom</th>
+			<th>Niveau</th>
+			<th>Nombre d'élèves</th>
+		</tr>
+		<% @groupes.each do |groupe| %>
 			<tr>
-				<th>Nom</th>
-				<th>Niveau</th>
-				<th>Nombre d'élèves</th>
+				<td><a href="afficher.rhtml?nom=<%= groupe.nom %>"> <%= groupe.nom %>  </a></td> 
+				<td> <%= groupe.niveau %> </td> 
+				<td> <%= groupe.total %> </td> 
 			</tr>
-			<% Groupe.tous.each do |groupe| %>
-				<tr>
-					<td><a href="afficher.rhtml?nom=<%= groupe.nom %>"> <%= groupe.nom %>  </a></td> 
-					<td> <%= groupe.niveau %> </td> 
-					<td> <%= groupe.total %> </td> 
-				</tr>
-			<% end %>	
-		</table>
+		<% end %>	
+	</table>
 <%= fermeture %>

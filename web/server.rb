@@ -7,7 +7,10 @@ require_relative "models/groupe.rb"
 require_relative "models/classe.rb"
 
 require_relative "controllers/application.rb"
+require_relative "controllers/regle.rb"
 require_relative "controllers/eleve.rb"
+require_relative "controllers/groupe.rb"
+require_relative "controllers/classe.rb"
 
 #-----
 Groupe.lire_fichier("assets/groupes.csv")

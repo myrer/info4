@@ -1,20 +1,19 @@
 <%= ouverture %>
-		<%= entete %>
 		
-		<% nom = servlet_request.query['nom'] %>
-		<% classe = Classe.obtenir(nom) %>
-		<h2> <%= "Liste de la classe #{classe.nom} [#{classe.total}]" %> </h2>
-		<table border="1">
-		<% classe.eleves.sort{|a,b| a.nom <=> b.nom}.each do |eleve| %>
-			<tr>
-				<td><%= eleve.numero %></td>
-				<td><%= eleve.nom %></td>
-				<td><%= eleve.prenom %></td>
-				<td><%= eleve.niveau %></td>
-				<td><%= eleve.groupe.nom %></td>
-				<td><%= eleve.sexe%></td>
-				<td><%= eleve.attributs.join(", ")%></td>
-			</tr>	
-		<% end %>	
-		</table>
+	<% nom = servlet_request.query['nom'] %>
+	<% classe = Classe.obtenir(nom) %>
+	<h2> <%= "Liste de la classe #{classe.nom} [#{classe.total}]" %> </h2>
+	<table border="1">
+	<% classe.eleves.sort{|a,b| a.nom <=> b.nom}.each do |eleve| %>
+		<tr>
+			<td><%= eleve.numero %></td>
+			<td><%= eleve.nom %></td>
+			<td><%= eleve.prenom %></td>
+			<td><%= eleve.niveau %></td>
+			<td><%= eleve.groupe.nom %></td>
+			<td><%= eleve.sexe%></td>
+			<td><%= eleve.attributs.join(", ")%></td>
+		</tr>	
+	<% end %>	
+	</table>
 <%= fermeture %>

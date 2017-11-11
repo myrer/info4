@@ -1,15 +1,8 @@
-def head 
-	"<head> <meta charset='UTF-8'>	</head>"
-end
-
-def entete
-	render("views/entete.html")
-end
-
 def ouverture
 	str = "<html>"
-	str << head
+	str << "<head> <meta charset='UTF-8'>	</head>"
 	str << "<body>"
+	str << render("views/entete.html")
 end
 
 def fermeture

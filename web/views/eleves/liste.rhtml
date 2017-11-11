@@ -1,32 +1,31 @@
-<% eleves = configurer_eleve_liste %>
+<% configurer_eleve_liste %>
 
 <%= ouverture %>
-		<%= entete %>
-		<h2> Liste des élèves</h2>
-		<table border="1">
-			<tr>
-				<th>Numéro</th>
-				<th>Niveau</th>
-				<th>Groupe</th>
-				<th>Nom</th>
-				<th>Prénom</th>
-				<th>Sexe</th>
-				<th>Natation</th>
-				<th>Attributs</th>
-			</tr>
-			<% eleves.each do |eleve| %>
-			<tr>
-				<td><%= eleve.numero %></td>
-				<td><%= eleve.niveau  %></td>
-				<td><%= eleve.groupe_nom %></td>
-				<td><%= eleve.nom %></td>
-				<td><%= eleve.prenom %></td>
-				<td><%= eleve.sexe %></td>
-				<td><%= eleve.natation %></td>
-				<td><%= eleve.attributs.join(";")%></td>
-			</tr>	
-			<% end %>	
+	<h2> Liste des élèves</h2>
+	<table border="1">
+		<tr>
+			<th>Numéro</th>
+			<th>Niveau</th>
+			<th>Groupe</th>
+			<th>Nom</th>
+			<th>Prénom</th>
+			<th>Sexe</th>
+			<th>Natation</th>
+			<th>Attributs</th>
+		</tr>
+		<% @eleves.each do |eleve| %>
+		<tr>
+			<td><%= eleve.numero %></td>
+			<td><%= eleve.niveau  %></td>
+			<td><%= eleve.groupe_nom %></td>
+			<td><%= eleve.nom %></td>
+			<td><%= eleve.prenom %></td>
+			<td><%= eleve.sexe %></td>
+			<td><%= eleve.natation %></td>
+			<td><%= eleve.attributs.join(";")%></td>
+		</tr>	
+		<% end %>	
 			
-		</table>
+	</table>
 		
 <%= fermeture >

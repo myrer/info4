@@ -1,19 +1,18 @@
 <%= ouverture %>
-	<%= entete %>
-		<% nom = servlet_request.query['nom'] %>
-		<% groupe = Groupe.obtenir(nom) %>
-		<h1> <%= "Liste des élèves du groupe #{groupe.nom} [#{groupe.total}]" %> </h1>
-		<table border="1">
-		<% groupe.eleves.sort{|a,b| a.nom <=> b.nom}.each do |eleve| %>
-			<tr>
-				<td><%= eleve.numero %></td>
-				<td><%= eleve.niveau %></td>
-				<td><%= eleve.nom %></td>
-				<td><%= eleve.prenom %></td>
-				<td><%= eleve.sexe%></td>
-				<td><%= eleve.attributs.join(", ")%></td>
-			</tr>	
-		<% end %>	
-		</table>
+<% configurer_groupe_afficher(servlet_request) %>
+
+	<h2> <%= "Liste des élèves du groupe #{@groupe.nom} [#{@groupe.total}]" %> </h2>
+	<table border="1">
+	<% @eleves.each do |eleve| %>
+		<tr>
+			<td><%= eleve.numero %></td>
+			<td><%= eleve.niveau %></td>
+			<td><%= eleve.nom %></td>
+			<td><%= eleve.prenom %></td>
+			<td><%= eleve.sexe%></td>
+			<td><%= eleve.attributs.join(", ")%></td>
+		</tr>	
+	<% end %>	
+	</table>
 		
 <%= fermeture %>

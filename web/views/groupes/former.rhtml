@@ -1,41 +1,37 @@
-<% former_groupes %>
-
-<html>
-	<%= head %>
+<%= ouverture %>
+<% configurer_groupe_former(servlet_request) %>	
+	<h3> Nombre d'itérations : <%= @compteur %></h3>
 	
-	<body>
-		<%= entete %>
+	<h3> Nombre d'élèves par groupe </h3>
+	
+	<table border="1">
+	<tr>
+		<th>Groupe</th>
+		<th>Total</th>
+	</tr>
 		
-		<h2> Nombre d'élèves par groupe </h2>
-		<table border="1">
+	<% @groupes.each do |groupe| %>
 		<tr>
-			<th>Groupe</th>
-			<th>Total</th>
-		</tr>
-		
-		<% Groupe.tous.each do |groupe| %>
-			<tr>
-				<td>
-					<a href=<%= "afficher.rhtml?nom=#{groupe.nom}" %> > <%= groupe.nom %></a>
-				</td>
-				<td><%= groupe.total %></td>
-			</tr>	
-		<% end %>	
-		</table>
+			<td>
+				<a href=<%= "afficher.rhtml?nom=#{groupe.nom}" %> > <%= groupe.nom %></a>
+			</td>
+			<td><%= groupe.total %></td>
+		</tr>	
+	<% end %>	
+	</table>
 
-		<h2> Nombre d'élèves par classe </h1>
-		<table border="1">
-		<tr>
-			<th>Classe</th>
-			<th>Total</th>
-		</tr>
+	<h3> Nombre d'élèves par classe </h3>
+	<table border="1">
+	<tr>
+		<th>Classe</th>
+		<th>Total</th>
+	</tr>
 		
-		<% Classe.tous.each do |classe| %>
-			<tr>
-				<td><a href=<%= "../classes/afficher.rhtml?nom=#{classe.nom}" %> > <%= classe.nom %></a></td>
-				<td><%= classe.total %></td>
-			</tr>	
-		<% end %>	
-		</table>
-	</body>
-</html>
+	<% @classes.each do |classe| %>
+		<tr>
+			<td><a href=<%= "../classes/afficher.rhtml?nom=#{classe.nom}" %> > <%= classe.nom %></a></td>
+			<td><%= classe.total %></td>
+		</tr>	
+	<% end %>	
+	</table>
+<%= fermeture %>
