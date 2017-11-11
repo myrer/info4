@@ -1,5 +1,6 @@
-def configurer_groupe_index
-	@groupes = Groupe.tous.sort {|a,b| a.nom <=> b.nom }
+def configurer_groupe_index(servlet_request)
+	@niveau = servlet_request.query['niveau']
+	@groupes = Groupe.tous.select{|groupe| groupe.niveau == @niveau}.sort {|a,b| a.nom <=> b.nom }
 end
 
 def configurer_groupe_afficher(servlet_request)
