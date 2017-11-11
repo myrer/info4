@@ -1,8 +1,12 @@
-<html>
-	<head><meta charset="UTF-8"></head>
-	<body>
-		<h1> Listes des groupes d'élèves - JDLM</h1>
+<%= ouverture %>
+		<%= entete %>
+		<h2> Listes des groupes d'élèves</h2>
 		<table border="1">
+			<tr>
+				<th>Nom</th>
+				<th>Niveau</th>
+				<th>Nombre d'élèves</th>
+			</tr>
 			<% Groupe.tous.each do |groupe| %>
 				<tr>
 					<td><a href="afficher.rhtml?nom=<%= groupe.nom %>"> <%= groupe.nom %>  </a></td> 
@@ -11,5 +15,4 @@
 				</tr>
 			<% end %>	
 		</table>
-	</body>
-</html>
+<%= fermeture %>

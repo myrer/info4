@@ -12,7 +12,7 @@ class Groupe
 	def to_s
 		"#{@nom};#{@niveau};"
 	end
-	
+
 	def total
 		if eleves.empty?
 			rv = 0

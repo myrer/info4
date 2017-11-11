@@ -15,3 +15,8 @@ def former_groupes
 		end
 	end
 end
+
+def configurer_eleve_liste
+	return Eleve.tous.sort {|a,b| a.nom+a.prenom <=> b.nom+b.prenom }
+end
+

@@ -1,9 +1,5 @@
-<html>
-	<head>
-		<meta charset="UTF-8">
-	</head>
-	
-	<body>
+<%= ouverture %>
+	<%= entete %>
 		<% nom = servlet_request.query['nom'] %>
 		<% groupe = Groupe.obtenir(nom) %>
 		<h1> <%= "Liste des élèves du groupe #{groupe.nom} [#{groupe.total}]" %> </h1>
@@ -19,5 +15,5 @@
 			</tr>	
 		<% end %>	
 		</table>
-	</body>
-</html>
+		
+<%= fermeture %>

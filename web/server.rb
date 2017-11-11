@@ -6,6 +6,7 @@ require_relative "models/eleve.rb"
 require_relative "models/groupe.rb"
 require_relative "models/classe.rb"
 
+require_relative "controllers/application.rb"
 require_relative "controllers/eleve.rb"
 
 #-----

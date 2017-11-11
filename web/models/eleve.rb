@@ -48,6 +48,14 @@ class Eleve
 		"[#{groupes}];"
 	end
 	
+	def groupe_nom
+		if @groupe.nil?
+			return  "?"
+		else
+			return @groupe.nom
+		end	
+	end
+	
 	def assigner_groupe(groupe)
 		if  @groupes_permis.include?(groupe)
 		then 

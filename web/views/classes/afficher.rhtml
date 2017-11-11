@@ -1,12 +1,9 @@
-<html>
-	<head>
-		<meta charset="UTF-8">
-	</head>
-	
-	<body>
+<%= ouverture %>
+		<%= entete %>
+		
 		<% nom = servlet_request.query['nom'] %>
 		<% classe = Classe.obtenir(nom) %>
-		<h1> <%= "Liste de la classe #{classe.nom} [#{classe.total}]" %> </h1>
+		<h2> <%= "Liste de la classe #{classe.nom} [#{classe.total}]" %> </h2>
 		<table border="1">
 		<% classe.eleves.sort{|a,b| a.nom <=> b.nom}.each do |eleve| %>
 			<tr>
@@ -20,5 +17,4 @@
 			</tr>	
 		<% end %>	
 		</table>
-	</body>
-</html>
+<%= fermeture %>
