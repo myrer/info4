@@ -1,6 +1,7 @@
 class Classe
 	@@tous = []
 	attr_reader :nom, :niveau, :max_eleves, :attribut, :groupes_permis
+	attr_writer :nom, :niveau, :attribut 
 	
 	def initialize(params)
 		@nom = params[:nom]
@@ -12,7 +13,7 @@ class Classe
 	end
 	
 	def groupes_permis_str
-		@groupes_permis.collect{|x| x.nom}.join(",") 
+		@groupes_permis.collect{|x| x.nom}.join(";") 
 	end
 	
 	def to_s
@@ -27,7 +28,15 @@ class Classe
 		end
 		return rv
 	end
-
+	
+	def max_eleves=(max)
+		@max_eleves = max.to_s.to_i
+	end
+	
+	def groupes_permis=(groupes_permis_ary)
+		@groupes_permis = groupes_permis_ary.collect{|g| Groupe.obtenir(g)}
+	end
+	
 	def eleves
 		Eleve.tous.select{|eleve| eleve.classes.include?(self) }
 	end

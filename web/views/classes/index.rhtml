@@ -10,6 +10,7 @@
 			<th> Groupes permis</th>
 			<th> Maximun d'élèves</th>
 			<th> Nombre d'élèves</th>
+			<th> Actions</th>
 		</tr>
 		<% @classes.each do |classe| %>
 			<tr>
@@ -19,6 +20,7 @@
 				<td> <%= classe.groupes_permis_str %> </td> 
 				<td> <%= classe.max_eleves %> </td> 
 				<td> <%= classe.total %> </td> 
+				<td> <a href="modifier.rhtml?nom=<%=classe.nom%>">Mod.</a></td>
 			</tr>
 		<% end %>	
 	</table>
