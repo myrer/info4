@@ -3,36 +3,28 @@
 	<h3> <%= @message %></h3>
 	<h3> Nombre d'itérations : <%= @compteur %></h3>
 	
-	<h3> Nombre d'élèves par groupe </h3>
+<h2> Listes des classes : <%= @niveau %> </h2>
+	<table border="1">
+		<tr>
+			<th> Nom</th>
+			<th> Niveau</th>
+			<th> Attribut</th>
+			<th> Groupes permis</th>
+			<th> Maximun d'élèves</th>
+			<th> Nombre d'élèves</th>
+			<th> Actions</th>
+		</tr>
+		<% @classes.each do |classe| %>
+			<tr>
+				<td><a href="afficher.rhtml?nom=<%= classe.nom %>"> <%= classe.nom %>  </a></td> 
+				<td> <%= classe.niveau %> </td> 
+				<td> <%= classe.attribut %> </td> 
+				<td> <%= classe.groupes_permis_str %> </td> 
+				<td> <%= classe.max_eleves %> </td> 
+				<td> <%= classe.total %> </td> 
+				<td> <a href="modifier.rhtml?nom=<%=classe.nom%>">Mod.</a></td>
+			</tr>
+		<% end %>
+	</table>
 	
-	<table border="1">
-	<tr>
-		<th>Groupe</th>
-		<th>Total</th>
-	</tr>
-		
-	<% @groupes.each do |groupe| %>
-		<tr>
-			<td>
-				<a href=<%= "afficher.rhtml?nom=#{groupe.nom}" %> > <%= groupe.nom %></a>
-			</td>
-			<td><%= groupe.total %></td>
-		</tr>	
-	<% end %>	
-	</table>
-
-	<h3> Nombre d'élèves par classe </h3>
-	<table border="1">
-	<tr>
-		<th>Classe</th>
-		<th>Total</th>
-	</tr>
-		
-	<% @classes.each do |classe| %>
-		<tr>
-			<td><a href=<%= "../classes/afficher.rhtml?nom=#{classe.nom}" %> > <%= classe.nom %></a></td>
-			<td><%= classe.total %></td>
-		</tr>	
-	<% end %>	
-	</table>
 <%= fermeture %>

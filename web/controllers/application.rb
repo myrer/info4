@@ -11,14 +11,18 @@ def fermeture
 	"</body></html>"
 end
 
-def render(file_name)
+def my_render(file_name, b = nil)
 	f = File.open(file_name, "r")
 	str = ""
 	while line = f.gets
 		str << line
 	end
 	f.close
-	return str
+	if b.nil?
+		return str
+	else
+		return ERB.new(str).result(b)
+	end	
 end
 
 def select_tag(params)
@@ -32,8 +36,6 @@ def select_tag(params)
 end
 
 def checkbox_tag(params)
-	puts params
-	#<input type="checkbox" name="ens_cb[]" value="153" checked />
 	str = %{<fieldset>}
 	params[:options].each do |option|
 		str << %{<input type="checkbox" name="groupes[]" value="#{option}" id="#{option}" }
