@@ -1,0 +1,23 @@
+<% regles = regles_index_controller(servlet_request.query) %>
+<html>
+	<head><meta charset='UTF-8'></head>	
+	<body>
+	<%= entete %>
+	<%= barre_de_navigation %>
+	<h2> Liste des règles</h2>
+	<table border="1">
+		<tr>
+			<th><a href=index.rhtml?ordre=niveau>Niveau</a></th>
+			<th><a href=index.rhtml?ordre=attributs>Attributs</a></th>
+			<th>Groupes permis</th>
+		</tr>
+		<% regles.each do |regle| %>
+			<tr>
+				<td><%= regle.niveau %></td>
+				<td><%= regle.attribut %></td>
+				<td><%= regle.groupes_permis.collect{|x| x.nom}.join(", ") %></td>
+			</tr>	
+		<% end %>	
+		</table>
+	</body>
+</html>

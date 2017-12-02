@@ -1,6 +1,11 @@
-def configurer_groupe_index(servlet_request)
-	@niveau = servlet_request.query['niveau']
-	@groupes = Groupe.tous.select{|groupe| groupe.niveau == @niveau}.sort {|a,b| a.nom <=> b.nom }
+def groupes_index_controller(requete)
+	case requete['ordre']
+	when 'niveau'
+		groupes = Groupe.tous.sort {|a,b| a.niveau+a.nom <=> b.niveau+b.nom}
+	else
+		groupes = Groupe.tous.sort {|a,b| a.nom <=> b.nom }
+	end	
+	return groupes
 end
 
 def configurer_groupe_afficher(servlet_request)
@@ -9,21 +14,20 @@ def configurer_groupe_afficher(servlet_request)
 	@eleves = @groupe.eleves.sort{|a,b| a.nom+a.prenom <=> b.nom+b.prenom}
 end
 
-def configurer_groupe_former(servlet_request)
-	@niveau = servlet_request.query['niveau']
-	eleves = Eleve.tous.select{|eleve| eleve.niveau == @niveau}
+def groupes_former_controller(requete)
+	niveau = requete['niveau']
+	eleves = Eleve.tous.select{|eleve| eleve.niveau == niveau}
 	if eleves.empty?
-		@message = "Aucun élève dans le niveau #{@niveau}."
-		@compteur = 0
-		@groupes = []
-		@classes = []
+		message = "Aucun élève dans le niveau #{niveau}."
+		compteur = 0
+		groupes = []
+		classes = []
 	else	
-		former_groupes(eleves)
-		@groupes = Groupe.tous.select{|groupe| groupe.niveau == @niveau}
-		@classes = Classe.tous.select{|classe| classe.niveau == @niveau}
+		compteur = former_groupes(eleves)
+		classes = Classe.tous.select{|classe| classe.niveau == niveau}
 	end	
+	return niveau, compteur, message, classes
 end
-	
 
 def former_groupes(eleves)
 	eleves.each {|eleve| eleve.assigner_groupe_au_hasard }
@@ -40,5 +44,5 @@ def former_groupes(eleves)
 			fini = 	classes_du_niveau.all? {|classe| classe.total <= classe.max_eleves }
 		end
 	end
-	@compteur = compteur
+	return compteur
 end

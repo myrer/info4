@@ -66,11 +66,11 @@ class Eleve
 		assigner_classes
 	end
 	
-	def self.tous
+	def Eleve.tous
 		@@tous
 	end
 	
-	def self.importer(nom_fichier)
+	def Eleve.lire_fichier(nom_fichier)
 		rapport = []
 		f = File.open(nom_fichier, "r")
 		while ligne = f.gets

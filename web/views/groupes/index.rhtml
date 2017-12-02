@@ -1,13 +1,18 @@
-<%= ouverture %>
-<% configurer_groupe_index(servlet_request) %>
-	<h2> Listes des groupes d'élèves : <%= @niveau %></h2>
+<% groupes = groupes_index_controller(servlet_request.query) %>
+<html>
+	<head><meta charset='UTF-8'></head>	
+	<body>
+	<%= entete %>
+	<%= barre_de_navigation %>
+	<h2> Listes des groupes </h2>
+	
 	<table border="1">
 		<tr>
-			<th>Nom</th>
-			<th>Niveau</th>
+			<th><a href=index.rhtml?ordre=nom>Nom</a></th>
+			<th><a href=index.rhtml?ordre=niveau>Niveau</a></th>
 			<th>Nombre d'élèves</th>
 		</tr>
-		<% @groupes.each do |groupe| %>
+		<% groupes.each do |groupe| %>
 			<tr>
 				<td><a href="afficher.rhtml?nom=<%= groupe.nom %>"> <%= groupe.nom %>  </a></td> 
 				<td> <%= groupe.niveau %> </td> 
@@ -15,4 +20,5 @@
 			</tr>
 		<% end %>	
 	</table>
-<%= fermeture %>
+	</body>
+</html>

@@ -1,9 +1,13 @@
-<%= ouverture %>
-<% configurer_groupe_former(servlet_request) %>	
+<% niveau, compteur, message, classes =  groupes_former_controller(servlet_request.query) %>	
+<html>
+	<head><meta charset='UTF-8'></head>
+	<body>
+	<%= entete %>
+	<%= barre_de_navigation %>
 	<h3> <%= @message %></h3>
-	<h3> Nombre d'itérations : <%= @compteur %></h3>
+	<h3> Nombre d'itérations : <%= compteur %></h3>
 	
-<h2> Listes des classes : <%= @niveau %> </h2>
+	<h2> Listes des classes : <%= niveau %> </h2>
 	<table border="1">
 		<tr>
 			<th> Nom</th>
@@ -14,7 +18,7 @@
 			<th> Nombre d'élèves</th>
 			<th> Actions</th>
 		</tr>
-		<% @classes.each do |classe| %>
+		<% classes.each do |classe| %>
 			<tr>
 				<td><a href="afficher.rhtml?nom=<%= classe.nom %>"> <%= classe.nom %>  </a></td> 
 				<td> <%= classe.niveau %> </td> 
@@ -27,4 +31,5 @@
 		<% end %>
 	</table>
 	
-<%= fermeture %>
+	</body>
+</html>	

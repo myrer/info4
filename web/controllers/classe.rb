@@ -1,6 +1,13 @@
-def configurer_classe_index(servlet_request)
-	@niveau = servlet_request.query['niveau']
-	@classes = Classe.tous.select{|classe| classe.niveau == @niveau}.sort {|a,b| a.nom <=> b.nom }
+def classes_index_controller(requete)
+	case requete['ordre']
+	when 'niveau'	
+		classes = Classe.tous.sort {|a,b| a.niveau+a.nom <=> b.niveau+b.nom}
+	when 'attribut'	
+		classes = Classe.tous.sort {|a,b| a.attribut+a.nom <=> b.attribut+b.nom}
+	else
+		classes = Classe.tous.sort {|a,b| a.nom+a.niveau <=> b.nom+b.niveau }
+	end
+	return classes
 end
 
 def configurer_classe_modifier(servlet_request)
