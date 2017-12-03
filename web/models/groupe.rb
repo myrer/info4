@@ -8,6 +8,10 @@ class Groupe
 		@@tous << self	
 	end
 
+	def id
+		@nom
+	end
+	
 	def to_s
 		"#{@nom};#{@niveau};"
 	end
@@ -29,8 +33,8 @@ class Groupe
 		@@tous
 	end
 	
-	def self.obtenir(nom)
-		rv = @@tous.find{|x| x.nom == nom}
+	def self.obtenir(id)
+		rv = @@tous.find{|x| x.id == id}
 	end
 	
 	def Groupe.niveau(niveau)

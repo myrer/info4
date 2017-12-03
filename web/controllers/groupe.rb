@@ -8,10 +8,11 @@ def groupes_index_controller(requete)
 	return groupes
 end
 
-def configurer_groupe_afficher(servlet_request)
-	nom = servlet_request.query['nom']
-	@groupe = Groupe.obtenir(nom)
-	@eleves = @groupe.eleves.sort{|a,b| a.nom+a.prenom <=> b.nom+b.prenom}
+def groupes_afficher_controller(requete)
+	id = requete['id']
+	groupe = Groupe.obtenir(id)
+	eleves = groupe.eleves.sort{|a,b| a.nom+a.prenom <=> b.nom+b.prenom}
+	return groupe, eleves
 end
 
 def groupes_former_controller(requete)

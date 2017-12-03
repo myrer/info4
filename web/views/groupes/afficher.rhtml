@@ -1,9 +1,12 @@
-<%= ouverture %>
-<% configurer_groupe_afficher(servlet_request) %>
-
-	<h2> <%= "Liste des élèves du groupe #{@groupe.nom} [#{@groupe.total}]" %> </h2>
+<% groupe, eleves = groupes_afficher_controller(servlet_request.query) %>
+<html>
+	<head><meta charset='UTF-8'></head>
+	<body>
+	<%= entete %>
+	<%= barre_de_navigation %>
+	<h2> <%= "Liste des élèves du groupe #{groupe.nom} [#{groupe.total}]" %> </h2>
 	<table border="1">
-	<% @eleves.each do |eleve| %>
+	<% eleves.each do |eleve| %>
 		<tr>
 			<td><%= eleve.numero %></td>
 			<td><%= eleve.niveau %></td>
@@ -14,5 +17,5 @@
 		</tr>	
 	<% end %>	
 	</table>
-		
-<%= fermeture %>
+</body>
+</html>
